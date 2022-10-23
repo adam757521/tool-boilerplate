@@ -1,8 +1,7 @@
 package ui
 
 import (
-	"fmt"
-	"golang.org/x/sys/windows"
+	"errors"
 	"os"
 	"os/exec"
 	"runtime"
@@ -17,17 +16,7 @@ var (
 )
 
 func WindowsResetCursor() error {
-	hOut, err := windows.GetStdHandle(windows.STD_OUTPUT_HANDLE)
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("\033[?25l")
-
-	return windows.SetConsoleCursorPosition(hOut, windows.Coord{
-		X: 0,
-		Y: 0,
-	})
+	return errors.New("windows only")
 }
 
 func Clear() {
