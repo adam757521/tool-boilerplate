@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/adam757521/tool-boilerplate/pkg/ui"
 	"github.com/fatih/color"
-	"tool-boilerplate/pkg/ui"
 )
 
 func test() {

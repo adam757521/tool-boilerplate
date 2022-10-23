@@ -1,4 +1,4 @@
-module tool-boilerplate
+module github.com/adam757521/tool-boilerplate
 
 go 1.19
 
