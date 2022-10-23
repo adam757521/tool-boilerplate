@@ -3,6 +3,8 @@ package ui
 import (
 	"fmt"
 	"golang.org/x/sys/windows"
+	"os"
+	"os/exec"
 )
 
 func WindowsResetCursor() error {
@@ -20,7 +22,7 @@ func WindowsResetCursor() error {
 }
 
 func Clear() {
-	cmd := exec.Command("cmd", "/k", "cls")
+	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
 	_ = cmd.Run()
 }
