@@ -18,3 +18,9 @@ func WindowsResetCursor() error {
 		Y: 0,
 	})
 }
+
+func Clear() {
+	cmd := exec.Command("cmd", "/k", "cls")
+	cmd.Stdout = os.Stdout
+	_ = cmd.Run()
+}
