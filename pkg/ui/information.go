@@ -177,7 +177,10 @@ func ProgressBar(header string, percent int, pColor colorFunc) (string, error) {
 	sb.WriteString(headerS)
 
 	bgWhite := color.New(color.BgHiWhite)
-	filled := space / (100 / percent)
+	filled := 0
+	if percent != 0 {
+		filled = space / (100 / percent)
+	}
 	remaining := space - filled
 	progressFiller := bgWhite.Sprint(strings.Repeat(" ", filled)) + strings.Repeat(" ", remaining)
 
