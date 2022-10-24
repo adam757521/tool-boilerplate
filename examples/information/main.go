@@ -30,27 +30,12 @@ func CUILoop(lastUpdated *time.Time) {
 
 	sections := []*ui.Section{
 		{
-			Header: "AdBot",
+			Header: "Main",
 			Fields: []*ui.Field{
 				{
-					Header:      "Threads:",
+					Header:      "Next Clear In:",
 					HeaderColor: color.BlueString,
-					Value:       "3",
-				},
-				{
-					Header:      "Revenue",
-					HeaderColor: color.BlueString,
-					Value:       "0.000/1.340$",
-				},
-				{
-					Header:      "Ads (Hour):",
-					HeaderColor: color.BlueString,
-					Value:       "0",
-				},
-				{
-					Header:      "Revenue (Hour):",
-					HeaderColor: color.BlueString,
-					Value:       "0.000$",
+					Value:       "10",
 				},
 			},
 			Color: color.GreenString,

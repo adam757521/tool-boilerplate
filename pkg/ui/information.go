@@ -41,8 +41,10 @@ func (s *Section) GetWidth() (int, int) {
 		if fieldStart > start {
 			start = fieldStart
 		}
+	}
 
-		fieldLength := start + len(field.Value) + 8
+	for _, field := range s.Fields {
+		fieldLength := start + len(field.Value) + 7
 		if fieldLength > width {
 			width = fieldLength
 		}
