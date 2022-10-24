@@ -2,6 +2,8 @@ package ui
 
 import (
 	"errors"
+	"fmt"
+	"github.com/fatih/color"
 	"golang.org/x/term"
 	"os"
 	"strings"
@@ -152,6 +154,38 @@ func SectionsToString(sections []*Section) string {
 	}
 
 	return sb.String()
+}
+
+func insertSubstring(str string, substr string, color colorFunc, index int) string {
+	return str[:index] + color(substr) + str[index+len(substr):]
+}
+
+func ProgressBar(header string, percent int, pColor colorFunc) (string, error) {
+	width, _, err := term.GetSize(int(os.Stdout.Fd()))
+	if err != nil {
+		return "", err
+	}
+
+	headerStr := fmt.Sprintf(" %s (%d%%) ", header, percent)
+
+	space := width - 2
+
+	var sb strings.Builder
+	filler := strings.Repeat(Dash, space)
+
+	headerS := pColor(CornerLeft + Dash + headerStr + strings.Repeat(Dash, width-len(headerStr)-3) + CornerRight)
+	sb.WriteString(headerS)
+
+	bgWhite := color.New(color.BgHiWhite)
+	filled := space / (100 / percent)
+	remaining := space - filled
+	progressFiller := bgWhite.Sprint(strings.Repeat(" ", filled)) + strings.Repeat(" ", remaining)
+
+	sb.WriteString(pColor(VerticalDash) + progressFiller + pColor(VerticalDash))
+
+	sb.WriteString(pColor(CornerDownLeft + filler + CornerDownRight))
+
+	return sb.String(), nil
 }
 
 func ToPrintable(sections []*Section) (string, error) {

@@ -8,6 +8,9 @@ import (
 
 func TestInformation(t *testing.T) {
 	Clear()
+	s, err := ProgressBar("Streaming", 50, color.HiRedString)
+	fmt.Println(s)
+
 	sections := []*Section{
 		{
 			Header: "Main",
