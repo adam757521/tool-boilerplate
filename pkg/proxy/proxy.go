@@ -17,7 +17,7 @@ type Proxy struct {
 }
 
 func FromString(proxyStr string, protocol string) (*Proxy, error) {
-	splittedProxy := strings.Split(proxyStr, ":")
+	splittedProxy := strings.Split(strings.TrimSpace(proxyStr), ":")
 
 	if len(splittedProxy) < 2 {
 		return nil, errors.New("invalid format for proxy")
