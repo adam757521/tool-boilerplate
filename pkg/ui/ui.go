@@ -3,9 +3,11 @@ package ui
 import (
 	"fmt"
 	"os"
+	"os/exec"
 )
 
 type ColorInfo struct {
+	Ascii  *RGB
 	Error  *RGB
 	Parent *RGB
 	Child  *RGB
@@ -31,11 +33,11 @@ type Category struct {
 }
 
 type UI struct {
-	AsciiFunc  func()
+	Ascii      string
 	Color      ColorInfo
 	Categories []Category
 	Version    string
-	Author     string
+	Title      string
 }
 
 func (r *Renderable) Render(info *RenderInfo) {
@@ -61,17 +63,12 @@ func (ui *UI) WaitForInput(options int) (int, bool) {
 func (ui *UI) RenderInformation() {
 	ui.Color.Parent.Foreground("\nVersion: ")
 	ui.Color.Child.Foreground(ui.Version)
-
-	ui.Color.Parent.Foreground("\nAuthor: ")
-	ui.Color.Child.Foreground(ui.Author + "\n")
 }
 
 func (ui *UI) DefaultRender(err string, parent string, renderables []Renderable) {
 	Clear()
 
-	if ui.AsciiFunc != nil {
-		ui.AsciiFunc()
-	}
+	ui.Color.Ascii.Foreground(ui.Ascii + "\n")
 
 	if err != "" {
 		ui.Color.Error.Foreground(err + "\n")
@@ -86,6 +83,11 @@ func (ui *UI) DefaultRender(err string, parent string, renderables []Renderable)
 			Color:  ui.Color.Child,
 		})
 	}
+}
+
+func (ui *UI) ChangeTitle(title string) {
+	cmd := exec.Command("title", title)
+	_ = cmd.Run()
 }
 
 func (category *Category) Render(parentUI *UI, err string) {
@@ -107,7 +109,10 @@ func (category *Category) Render(parentUI *UI, err string) {
 			parentUI.RenderCategories("")
 		} else {
 			parentUI.DefaultRender("", "Running option...", []Renderable{})
-			category.Options[index].Callback()
+			option := category.Options[index]
+
+			parentUI.ChangeTitle(fmt.Sprintf("%s - %s", parentUI.Title, option.Renderable.Label))
+			option.Callback()
 
 			parentUI.Color.Parent.Foreground("\nOption finished.")
 			parentUI.Color.Child.Foreground(" Press enter to return to menu.")
