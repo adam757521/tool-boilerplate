@@ -136,6 +136,8 @@ func (ui *UI) RenderAuth(authValidator func(string) bool) {
 }
 
 func (ui *UI) RenderCategories(err string) {
+	ui.ChangeTitle(ui.Title)
+
 	ui.DefaultRender(err, "Categories", ConvertCategoriesToRenderables(ui.Categories))
 
 	exit := Renderable{Label: "Exit"}
