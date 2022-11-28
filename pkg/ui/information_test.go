@@ -8,7 +8,7 @@ import (
 
 func TestInformation(t *testing.T) {
 	Clear()
-	s, err := ProgressBar("Streaming", 90, color.HiRedString)
+	s, err := ProgressBar("Streaming", 90, RGB{255, 0, 0})
 	fmt.Println(s)
 
 	sections := []*Section{
@@ -21,7 +21,7 @@ func TestInformation(t *testing.T) {
 					Value:       "World",
 				},
 			},
-			Color: color.GreenString,
+			Color: RGB{R: 255},
 		},
 	}
 

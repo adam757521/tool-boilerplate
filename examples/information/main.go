@@ -38,7 +38,7 @@ func CUILoop(lastUpdated *time.Time) {
 					Value:       "10",
 				},
 			},
-			Color: color.GreenString,
+			Color: ui.RGB{R: 255},
 		},
 	}
 

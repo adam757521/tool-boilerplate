@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/adam757521/tool-boilerplate/pkg/ui"
-	"github.com/fatih/color"
 )
 
 func test() {
@@ -15,12 +14,10 @@ func test() {
 
 func main() {
 	myInterface := &ui.UI{
-		Ascii: "TestAscii",
 		Color: ui.ColorInfo{
-			Ascii:  color.New(color.FgHiBlue),
-			Error:  color.New(color.FgHiRed),
-			Parent: color.New(color.FgHiBlue),
-			Child:  color.New(color.FgHiBlue),
+			Error:  &ui.RGB{R: 255},
+			Parent: &ui.RGB{B: 255},
+			Child:  &ui.RGB{B: 255},
 		},
 		Categories: nil,
 		Version:    "1.0.0",

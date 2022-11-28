@@ -31,7 +31,7 @@ type Section struct {
 	Header string
 	Fields []*Field
 	Width  int
-	Color  colorFunc
+	Color  RGB
 }
 
 func (s *Section) GetWidth() (int, int) {
@@ -66,11 +66,11 @@ func (s *Section) ToStringArray() []string {
 		categoryHeader = CornerLeft + Dash + " " + s.Header + " " + strings.Repeat(Dash, dashes) + CornerRight
 	}
 
-	printable = append(printable, s.Color(categoryHeader))
+	printable = append(printable, s.Color.Color(categoryHeader))
 
 	for _, field := range s.Fields {
 		padding := start - len(field.Header)
-		prefix := s.Color(VerticalDash+"[") + ">" + s.Color("] ")
+		prefix := s.Color.Color(VerticalDash+"[") + ">" + s.Color.Color("] ")
 
 		headerColored := field.Header
 		if field.HeaderColor != nil {
@@ -91,10 +91,10 @@ func (s *Section) ToStringArray() []string {
 		if padding < 0 {
 			padding = 0
 		}
-		printable = append(printable, prefix+fieldStr+strings.Repeat(" ", padding)+s.Color(VerticalDash))
+		printable = append(printable, prefix+fieldStr+strings.Repeat(" ", padding)+s.Color.Color(VerticalDash))
 	}
 
-	printable = append(printable, s.Color(CornerDownLeft+strings.Repeat(Dash, width-2)+CornerDownRight))
+	printable = append(printable, s.Color.Color(CornerDownLeft+strings.Repeat(Dash, width-2)+CornerDownRight))
 
 	return printable
 }
@@ -156,11 +156,7 @@ func SectionsToString(sections []*Section) string {
 	return sb.String()
 }
 
-func insertSubstring(str string, substr string, color colorFunc, index int) string {
-	return str[:index] + color(substr) + str[index+len(substr):]
-}
-
-func ProgressBar(header string, percent int, pColor colorFunc) (string, error) {
+func ProgressBar(header string, percent int, rgb RGB) (string, error) {
 	width, _, err := term.GetSize(int(os.Stdout.Fd()))
 	if err != nil {
 		return "", err
@@ -173,7 +169,7 @@ func ProgressBar(header string, percent int, pColor colorFunc) (string, error) {
 	var sb strings.Builder
 	filler := strings.Repeat(Dash, space)
 
-	headerS := pColor(CornerLeft + Dash + headerStr + strings.Repeat(Dash, width-len(headerStr)-3) + CornerRight)
+	headerS := rgb.Color(CornerLeft + Dash + headerStr + strings.Repeat(Dash, width-len(headerStr)-3) + CornerRight)
 	sb.WriteString(headerS)
 
 	bgWhite := color.New(color.BgHiWhite)
@@ -182,11 +178,11 @@ func ProgressBar(header string, percent int, pColor colorFunc) (string, error) {
 		filled = int(float64(space) / (100 / float64(percent)))
 	}
 	remaining := space - filled
-	progressFiller := bgWhite.Sprint(strings.Repeat(" ", filled)) + strings.Repeat(" ", remaining)
+	progressFiller := bgWhite.Sprint(strings.Repeat("‎", filled)) + strings.Repeat("‎", remaining)
 
-	sb.WriteString(pColor(VerticalDash) + progressFiller + pColor(VerticalDash))
+	sb.WriteString(rgb.Color(VerticalDash) + progressFiller + rgb.Color(VerticalDash))
 
-	sb.WriteString(pColor(CornerDownLeft + filler + CornerDownRight))
+	sb.WriteString(rgb.Color(CornerDownLeft + filler + CornerDownRight))
 
 	return sb.String(), nil
 }
