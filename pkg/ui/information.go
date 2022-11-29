@@ -178,7 +178,7 @@ func ProgressBar(header string, percent int, rgb RGB) (string, error) {
 		filled = int(float64(space) / (100 / float64(percent)))
 	}
 	remaining := space - filled
-	progressFiller := bgWhite.Sprint(strings.Repeat("‎", filled)) + strings.Repeat("‎", remaining)
+	progressFiller := bgWhite.Sprint(strings.Repeat(" ", filled)) + strings.Repeat(" ", remaining)
 
 	sb.WriteString(rgb.Color(VerticalDash) + progressFiller + rgb.Color(VerticalDash))
 
