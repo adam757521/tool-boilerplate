@@ -7,7 +7,6 @@ import (
 )
 
 type ColorInfo struct {
-	Ascii  *RGB
 	Error  *RGB
 	Parent *RGB
 	Child  *RGB
@@ -33,7 +32,7 @@ type Category struct {
 }
 
 type UI struct {
-	Ascii      string
+	Ascii      func()
 	Color      ColorInfo
 	Categories []Category
 	Version    string
@@ -68,7 +67,9 @@ func (ui *UI) RenderInformation() {
 func (ui *UI) DefaultRender(err string, parent string, renderables []Renderable) {
 	Clear()
 
-	ui.Color.Ascii.Foreground(ui.Ascii + "\n")
+	if ui.Ascii != nil {
+		ui.Ascii()
+	}
 
 	if err != "" {
 		ui.Color.Error.Foreground(err + "\n")
