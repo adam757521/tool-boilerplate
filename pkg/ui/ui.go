@@ -70,8 +70,10 @@ func (ui *UI) RenderInformation() {
 	ui.Color.Parent.Foreground("\nVersion: ")
 	ui.Color.Child.Foreground(ui.Version + term)
 
-	ui.Color.Error.Foreground("\nNotice: ")
-	ui.Color.Child.Foreground(ui.Notice)
+	if ui.Notice != "" {
+		ui.Color.Error.Foreground("\nNotice: ")
+		ui.Color.Child.Foreground(ui.Notice)
+	}
 }
 
 func (ui *UI) DefaultRender(err string, parent string, renderables []Renderable) {
