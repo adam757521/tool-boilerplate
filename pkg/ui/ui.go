@@ -62,17 +62,12 @@ func (ui *UI) WaitForInput(options int) (int, bool) {
 }
 
 func (ui *UI) RenderInformation() {
-	term := ""
-	if ui.Notice != "" {
-		term = "\n"
-	}
-
 	ui.Color.Parent.Foreground("\nVersion: ")
-	ui.Color.Child.Foreground(ui.Version + term)
+	ui.Color.Child.Foreground(ui.Version + "\n")
 
 	if ui.Notice != "" {
-		ui.Color.Error.Foreground("\nNotice: ")
-		ui.Color.Child.Foreground(ui.Notice)
+		ui.Color.Error.Foreground("Notice: ")
+		ui.Color.Child.Foreground(ui.Notice + "\n")
 	}
 }
 
