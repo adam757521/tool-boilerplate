@@ -21,7 +21,7 @@ func main() {
 		},
 		Categories: nil,
 		Version:    "1.0.0",
-		Author:     "...",
+		Title:      "Example",
 	}
 
 	category := ui.Category{Renderable: ui.Renderable{Label: "Test Category"}, Options: []ui.Option{

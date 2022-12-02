@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 type ColorInfo struct {
@@ -87,11 +88,13 @@ func (ui *UI) DefaultRender(err string, parent string, renderables []Renderable)
 }
 
 func (ui *UI) ChangeTitle(title string) {
-	cmd := exec.Command("title", title)
+	cmd := exec.Command("cmd", append([]string{"/c", "title"}, strings.Split(title, " ")...)...)
 	_ = cmd.Run()
 }
 
 func (category *Category) Render(parentUI *UI, err string) {
+	parentUI.ChangeTitle(parentUI.Title)
+
 	parentUI.DefaultRender(err, "Options", ConvertOptionsToRenderables(category.Options))
 
 	back := Renderable{Label: "Back"}
@@ -126,6 +129,8 @@ func (category *Category) Render(parentUI *UI, err string) {
 }
 
 func (ui *UI) RenderAuth(authValidator func(string) bool) {
+	ui.ChangeTitle(ui.Title)
+
 	ui.DefaultRender("", "Enter license >", []Renderable{})
 
 	var license string
