@@ -32,10 +32,10 @@ func Callback() {
 func main() {
 	fmt.Println(ui.Dash + "➡️" + ui.Dash + "\n " + ui.VerticalDash)
 
-	interactive := ui.New(Printer{}, "Hello", nil, "Twitch AIO", 10, &ui.RGB{255, 0, 0})
+	interactive := ui.New(Printer{}, "Hello", nil, "Test", 10, &ui.RGB{255, 0, 0})
 	interactive.Fields = []*ui.InteractiveField{
-		&ui.InteractiveField{RenderLength: 4, Render: RenderFunc, Title: "Title", TitleLength: 5, Callback: Callback, Description: "Fuck"},
-		&ui.InteractiveField{RenderLength: 4, Render: RenderFunc, Title: "Title", TitleLength: 5, Callback: func() { fmt.Println("hello world") }, Description: "Wish i was dead"},
+		&ui.InteractiveField{RenderLength: 4, Render: RenderFunc, Title: "Title", TitleLength: 5, Callback: Callback, Description: "Option 2"},
+		&ui.InteractiveField{RenderLength: 4, Render: RenderFunc, Title: "Title", TitleLength: 5, Callback: func() { fmt.Println("hello world") }, Description: "Option 1"},
 	}
 
 	interactive.Start()
