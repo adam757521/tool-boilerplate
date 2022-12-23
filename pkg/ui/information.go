@@ -3,10 +3,11 @@ package ui
 import (
 	"errors"
 	"fmt"
-	"github.com/fatih/color"
-	"golang.org/x/term"
 	"os"
 	"strings"
+
+	"github.com/fatih/color"
+	"golang.org/x/term"
 )
 
 const (
@@ -16,6 +17,11 @@ const (
 	CornerRight     = "┓"
 	CornerDownLeft  = "┗"
 	CornerDownRight = "┛"
+	Intersect       = "╋"
+	IntersectDown   = "┳"
+	IntersectUp     = "┻"
+	IntersectLeft   = "┣"
+	IntersectRight  = "┫"
 )
 
 type colorFunc func(string, ...any) string
